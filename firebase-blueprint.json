@@ -1,0 +1,22 @@
+{
+  "entities": {
+    "Pack": {
+      "title": "Word Pack",
+      "description": "A collection of words for the game",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the pack" },
+        "words": { "type": "array", "items": { "type": "string" }, "description": "List of words" },
+        "createdBy": { "type": "string", "description": "User ID of the creator" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "words", "createdBy"]
+    }
+  },
+  "firestore": {
+    "/packs/{packId}": {
+      "schema": "Pack",
+      "description": "Custom word packs created by users"
+    }
+  }
+}

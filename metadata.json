@@ -1,0 +1,6 @@
+{
+  "name": "BluffIt",
+  "description": "A social deduction party game where one player (the Faker) doesn't know the secret word. Everyone else does. Players take turns giving clues — the Faker must bluff convincingly.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

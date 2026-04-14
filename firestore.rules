@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidPack(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.words is list && data.words.size() > 0 && data.words.size() <= 100 &&
+             data.createdBy == request.auth.uid;
+    }
+
+    match /packs/{packId} {
+      allow read: if true; // Publicly readable for games
+      allow create: if isAuthenticated() && isValidPack(request.resource.data);
+      allow update: if isOwner(resource.data.createdBy) && isValidPack(request.resource.data);
+      allow delete: if isOwner(resource.data.createdBy);
+    }
+  }
+}
